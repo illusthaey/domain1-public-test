@@ -9,12 +9,12 @@
   <link rel="icon" href="/static/favicon.ico" />
   <link rel="stylesheet" href="/static/style.css" />
 
-  <!-- 외부 CDN 제거: 로컬 파일로 로드 -->
-  <script defer src="/static/vendor/pdf.min.js"></script>
+  <!-- 외부 CDN 제거: 로컬 라이브러리 로드 -->
+  <script defer src="/static/vendor/pdf.js"></script>
   <script defer src="/static/vendor/xlsx.full.min.js"></script>
 
   <style>
-    /* ===== 모바일 겹침 방지 ===== */
+    /* 모바일 겹침 방지 */
     *, *::before, *::after { box-sizing: border-box; }
     label { display:block; min-width:0; }
     input, select { width:100%; max-width:100%; box-sizing:border-box; }
@@ -64,18 +64,10 @@
     </div>
   </header>
 
-  <!-- 1) 업로드 -->
   <section class="card">
     <h2 style="margin:0 0 8px;">1. 지출품의서 PDF 업로드</h2>
 
-    <input
-      id="pdfInput"
-      type="file"
-      accept="application/pdf"
-      multiple
-      style="display:none"
-      capture="environment"
-    />
+    <input id="pdfInput" type="file" accept="application/pdf" multiple style="display:none" capture="environment"/>
 
     <div id="dropZone" class="drop-zone">
       <div style="font-weight:800;">PDF 파일 선택하기 (클릭, 드래그)</div>
@@ -88,40 +80,33 @@
     </div>
   </section>
 
-  <!-- 2) 설정 -->
   <section class="card">
     <h2 style="margin:0 0 8px;">2. 필요경비율 등 계산 조건 설정</h2>
 
     <div class="grid3">
-      <label>
-        지급월(YYYY-MM)
+      <label>지급월(YYYY-MM)
         <input id="payMonth" type="text" placeholder="예: 2026-03" />
       </label>
 
-      <label>
-        필요경비 적용기간
+      <label>필요경비 적용기간
         <select id="periodSel"></select>
       </label>
 
-      <label>
-        필요경비율 직접입력(%) (선택)
+      <label>필요경비율 직접입력(%) (선택)
         <input id="customRate" type="number" step="0.1" placeholder="예: 14.9" />
       </label>
     </div>
 
     <div class="grid3" style="margin-top:12px;">
-      <label>
-        비과세소득(합계) (기본 0)
+      <label>비과세소득(합계) (기본 0)
         <input id="nontaxable" type="number" step="1" value="0" />
       </label>
 
-      <label>
-        기준보수액 하한(기본 1,330,000)
+      <label>기준보수액 하한(기본 1,330,000)
         <input id="minBase" type="number" step="1" value="1330000" />
       </label>
 
-      <label>
-        보험료율(기관+개인 합계)
+      <label>보험료율(기관+개인 합계)
         <div class="grid2" style="gap:8px;">
           <div>
             <div class="muted" style="margin-bottom:4px;">산재(총)</div>
@@ -145,7 +130,6 @@
     <div id="status" class="muted" style="margin-top:8px;"></div>
   </section>
 
-  <!-- 3) 결과 -->
   <section class="card">
     <h2 style="margin:0 0 8px;">3. 월보수액 계산 결과 보기</h2>
 
