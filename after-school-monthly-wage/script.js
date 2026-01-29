@@ -1,9 +1,7 @@
-/* /after-school-monthly-wage/script.js */
-/* eslint-disable no-alert */
+
+
 (function () {
-  // ----------------------------
-  // 0) 라이브러리 준비(PDF.js)
-  // ----------------------------
+
   const pdfjsLib = window.pdfjsLib;
   if (!pdfjsLib) {
     alert("PDF.js 로딩 실패. 네트워크 상태를 확인하세요.");
@@ -15,9 +13,9 @@
   const $ = (id) => document.getElementById(id);
   const fmt = (n) => (Number.isFinite(n) ? Math.round(n).toLocaleString("ko-KR") : "0");
 
-  // ----------------------------
-  // 1) 필요경비율(기간별) - 데이터로 유지
-  // ----------------------------
+
+  // 1) 필요경비율(기간별)
+
   const EXPENSE_PERIODS = [
     { label: "22년7월~23년6월", start: "2022-07-01", end: "2023-06-30", rate: 0.235 },
     { label: "23년7월~24년6월", start: "2023-07-01", end: "2024-06-30", rate: 0.165 },
@@ -25,9 +23,9 @@
     { label: "25년7월~26년6월", start: "2025-07-01", end: "2026-06-30", rate: 0.149 },
   ];
 
-  // ----------------------------
+
   // 2) UI 초기화
-  // ----------------------------
+
   const periodSel = $("periodSel");
   EXPENSE_PERIODS.forEach((p) => {
     const opt = document.createElement("option");
@@ -51,10 +49,17 @@
   };
 
   function setFiles(files) {
-    state.files = Array.from(files || []).filter((f) => f.type === "application/pdf");
+
+    const list = Array.from(files || []);
+    state.files = list.filter((f) => {
+      const nameOk = (f.name || "").toLowerCase().endsWith(".pdf");
+      const typeOk = (f.type || "") === "application/pdf";
+      return nameOk || typeOk;
+    });
+
     fileNames.textContent = state.files.length
       ? state.files.map((f) => f.name).join(", ")
-      : "선택된 파일 없음";
+      : "선택된 파일 없음 (※ PDF만 지원함)";
     $("btnDownload").disabled = true;
   }
 
@@ -86,21 +91,22 @@
     return p ? p.rate : EXPENSE_PERIODS[EXPENSE_PERIODS.length - 1].rate;
   }
 
-  // ----------------------------
+
   // 3) PDF 텍스트 추출 (로컬 처리)
-  //    - arrayBuffer -> pdfjsLib.getDocument() 패턴
-  // ----------------------------
+
   async function extractTextFromPdf(file) {
     const buf = await file.arrayBuffer();
-    const pdf = await pdfjsLib.getDocument(buf).promise; // 김동규 코드와 동일 패턴7
+    const pdf = await pdfjsLib.getDocument(buf).promise;
 
     const pages = [];
     for (let p = 1; p <= pdf.numPages; p++) {
       const page = await pdf.getPage(p);
       const tc = await page.getTextContent();
-      // MVP: 아이템 str join (표 좌표 복원은 2차에서)
       const raw = tc.items.map((it) => it.str).join(" ");
       pages.push({ page: p, text: normalize(raw) });
+
+
+      if (p % 2 === 0) await new Promise((r) => setTimeout(r, 0));
     }
     return pages;
   }
@@ -112,7 +118,7 @@
       .trim();
   }
 
-  // 품목내역 라인 후보 분절: " 12 " 같은 번호 패턴 앞에 개행 삽입
+
   function injectRowBreaks(text) {
     return text.replace(/(\s)(\d{1,3})\s+/g, "\n$2 ");
   }
@@ -135,7 +141,7 @@
     let type = "기타";
     let match = "미확정";
 
-    // 1) "... 강사료 김태희"
+    // 1) "... 강사료"
     if (desc.includes("강사료")) {
       const parts = desc.split(" ");
       const idx = parts.indexOf("강사료");
@@ -147,7 +153,7 @@
       }
     }
 
-    // 2) 라인 끝 "… 김태희"
+    // 2) 라인 끝 "…"
     if (!instructor) {
       const parts = desc.split(" ");
       const last = parts[parts.length - 1];
@@ -157,7 +163,7 @@
         type = "강사료";
         match = "확정";
       } else {
-        course = desc;
+        course = desc; // 끝전 포함, 원문 유지
         if (desc.includes("끝전") || desc.includes("충당금")) {
           type = "끝전";
           match = "미확정";
@@ -240,18 +246,18 @@
       }));
   }
 
-  // ----------------------------
-  // 4) 엑셀 생성(SheetJS)
-  // ----------------------------
+
+  // 4) 엑셀 생성
+
   function buildWorkbook({ rawItems, summaryRows, uncertainRows, settings }) {
     const wb = XLSX.utils.book_new();
 
-    // RAW
+    // RAW_품목내역
     const rawHeader = ["pdf", "page", "seq", "desc", "course", "instructor", "qty", "unit_price", "amount", "type", "match_status"];
     const rawAoA = [rawHeader, ...rawItems.map((r) => rawHeader.map((k) => (r[k] ?? "")))];
     XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(rawAoA), "RAW_품목내역");
 
-    // 강사별 월보수액
+    // 강사별_월보수액
     const rate = settings.expenseRate;
     const sumHeader = ["강사명", "강좌(추출)", "총품의금액(원)", "비과세소득(원)", "필요경비율", "필요경비(원)", "월보수액(원)"];
     const sumAoA = [sumHeader];
@@ -263,7 +269,7 @@
     });
     XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(sumAoA), "강사별_월보수액");
 
-    // 보험료
+    // 보험료_산정
     const insHeader = ["강사명", "월보수액(원)", "인정월보수액(하한반영)", "산재보험료(총)", "산재(사업주)", "산재(노무)", "고용보험료(총)", "고용(사업주)", "고용(노무)"];
     const insAoA = [insHeader];
     for (let i = 1; i < sumAoA.length; i++) {
@@ -276,8 +282,8 @@
     }
     XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(insAoA), "보험료_산정");
 
-    // 미확정
-    const unHeader = ["pdf", "desc", "amount"];
+    // 미확정_검토 (원문 desc 그대로)
+    const unHeader = ["pdf", "desc(원문)", "amount"];
     const unAoA = [unHeader, ...uncertainRows.map((r) => [r.pdf, r.desc, r.amount])];
     XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(unAoA), "미확정_검토");
 
@@ -333,9 +339,9 @@
     });
   }
 
-  // ----------------------------
+
   // 6) 메인 실행
-  // ----------------------------
+
   async function run() {
     if (!state.files.length) {
       status.innerHTML = `<span class="warn">PDF 파일을 선택하십시오.</span>`;
@@ -376,6 +382,8 @@
       attachUnassigned(rawItems);
 
       const summaryRows = summarize(rawItems);
+
+      // 끝전/충당금 중 미확정은 원문 desc 그대로 목록으로 유지
       const uncertainRows = rawItems.filter(
         (it) => (it.type === "끝전") && (!it.instructor || it.match_status === "미확정")
       );
