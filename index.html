@@ -14,18 +14,20 @@
 <main class="container">
 
   <h1>교육행정 업무 효율화 지원 웹페이지</h1>
-  <p class="subtitle">부제: 제작·운영 — 천재 고주무관</p>
+  <p class="subtitle">제작·운영 — 천재 고주무관</p>
 
   <p class="muted">
     ·학교 행정 업무 수행 과정에서 반복되는 산출·정리 업무를 구조화하여, 업무 효율성과 정확성을 높이기 위해 설계·제작한 업무 지원 웹페이지입니다.<br/>
     ·현재는 서버 미사용 상태로 일부 기능 구현에 제한이 있으며, 업무 여건이 허용되는 범위 내에서 단계적으로 업데이트할 예정입니다.<br/>
+    ·※강원특별자치도 기준이며, 지역 무관하게 항상 사용자 본인이 직접 관련 지침 등을 확인하고 업무 처리하여 주십시오. <br/>
+    ·※일부 계산 기능은 검증 미완료 단계입니다.
   </p>
 
   <hr/>
 
   <!-- ========================= 다운로드 섹션 ========================= -->
   <section class="section dl-section">
-    <h2 class="local-h2">업무 시간 단축용 파이썬 프로그램 다운로드</h2>
+    <h2 class="local-h2">업무 시간 단축용 exe 프로그램 (다운로드)</h2>
     <hr/>
 
     <div class="tool-grid">
@@ -33,7 +35,7 @@
       <!-- 카드 1 : 세입 미납자 독촉 -->
       <article class="tool-card">
         <header class="tool-head">
-          <h3 class="tool-title">세입 미납자 독촉 문자 발송 업무 경감 프로그램</h3>
+          <h3 class="tool-title">[세입] 미납자 독촉문자 발송업무 경감 프로그램 (초등)</h3>
         </header>
 
         <a class="btn primary tool-btn" id="downloadUnpaid" href="#" download>
@@ -43,8 +45,8 @@
         <div class="tool-body">
           <ul class="tool-list">
             ·전체 미납자 조회 내역 PDF를 업로드하면 미납자별 독촉 문자 문구와 고지내역 이미지 파일을 자동 생성<br/>
-            ·독촉 이력 정리용 서식 자동 생성<br/>
-            ·PDF 경로: 학교회계 &gt; 수입관리 &gt; 수입현황 &gt; 징수및수납현황 &gt; 미납자현황<br/>
+            ·독촉 이력 정리용 서식 자동 생성 (독촉 관리 및 감사 소명자료)<br/>
+            ·PDF 경로: 학교회계-수입관리-수입현황-징수및수납현황-미납자현황<br/>
             ·※ 현재 초등학교 PDF 서식만 데이터 추출 가능<br/>
           </ul>
 
@@ -62,15 +64,16 @@
       <!-- 카드 2 : 기타소득 -->
       <article class="tool-card">
         <header class="tool-head">
-          <h3 class="tool-title">연말정산 기타소득 등록 업무 경감 프로그램</h3>
+          <h3 class="tool-title">[연말정산] 기타소득 등록업무 경감 프로그램</h3>
         </header>
 
         <a class="btn primary tool-btn" id="downloadExpense" href="#" download>
-          연말정산 기타소득 등록 업무 경감 프로그램
+          [연말정산] 기타소득 등록업무 경감 프로그램
         </a>
 
         <div class="tool-body">
           <ul class="tool-list">
+            ·검증 완료. 배포 가능.
             ·지출결의서 PDF 1년치를 업로드하면 “기타” 및 “보수(일용)” 유형만 선별하여 엑셀 파일로 변환<br/>
           </ul>
 
@@ -87,10 +90,10 @@
 
     <script>
       const UNPAID_URL =
-        "https://github.com/comicshaey/filedownloadhaey/releases/download/pdf-to-png/unpaid_tool.exe";
+        "https://github.com/comicshaey/FILErealease/releases/download/pdf-to-png/unpaid_tool.exe";
 
       const EXPENSE_URL =
-        "https://github.com/comicshaey/filedownloadhaey/releases/download/pdf-to-excel/expense_pdf_to_excel_data_v260117.exe.exe";
+        "https://github.com/comicshaey/FILErealease/releases/download/pdf-to-excel/expense_pdf_to_excel_data_v260117.exe.exe";
 
       window.addEventListener("DOMContentLoaded", () => {
         const unpaid = document.getElementById("downloadUnpaid");
@@ -101,35 +104,10 @@
     </script>
   </section>
 
-  <!-- ========================= 자매 사이트 ========================= -->
-  <section class="section">
-    <h2 class="local-h2">연계 업무 지원 페이지</h2>
-    <hr/>
 
-    <p class="muted">
-      ·교육행정 업무 효율화를 목표로 운영 중인 외부 업무 지원 웹페이지입니다.<br/>
-      ·본 페이지와 유사한 문제의식을 바탕으로, 상호 보완적인 계산·정리 도구를 제공합니다.
-    </p>
+<!-- ========================= 본문 계산기 섹션 ========================= -->
 
-    <a
-      class="btn"
-      href="https://gyohaeng.pages.dev"
-      target="_blank"
-      rel="noopener noreferrer"
-    >
-      교행 페이지(gyohaeng.pages.dev) 바로가기
-    </a>
-
-    <div class="btn-desc">
-      ·본 페이지와 자매결연 형태로 상호 링크 운영 중
-    </div>
-  </section>
-
-  <!-- ========================= 본문 계산기 섹션 ========================= -->
-
-
-
-<!-- 노무제공자 섹션 -->
+<!-- [추가] 노무제공자 섹션 (교육공무직 섹션 위에 배치) -->
 <section class="section">
   <h2 class="local-h2">노무제공자 (방과후강사 등)</h2>
   <hr/>
@@ -137,7 +115,7 @@
   <div>
     <a class="btn" href="/pay-afterschool-teacher/">방과후강사 월보수액 계산기</a>
     <div class="btn-desc">
-      ·품의금액(강사료 산정금액) 입력하면 월보수액 계산해줌.
+      ·강사료 입력하면 월보수액이랑 산재보험료 자동계산됨. (검증 완료)
     </div>
   </div>
 </section>
@@ -172,6 +150,13 @@
       <a class="btn" href="/annual-leave/">교육공무직 연차 유급휴가 계산기</a>
       <div class="btn-desc">·기본 계산 로직</div>
     </div>
+
+    <div>
+      <a class="btn" href="/annual-leave-2026-mvp/">교육공무직 연차 유급휴가 계산기 (초안)</a>
+      <div class="btn-desc">·수정중</div>
+    </div>
+
+
 
     <div>
       <a class="btn" href="/annual-leave-pay/">연차 유급휴가 미사용 수당 계산기</a>
@@ -227,10 +212,30 @@
     </div>
   </section>
 
+
+    <!-- ========================= 도원결의 사이트 ========================= -->
+  <section class="section">
+    <h2 class="local-h2">연계 업무지원 개인제작 웹사이트</h2>
+    <hr/>
+    <a
+      class="btn"
+      href="https://gyohaeng.pages.dev"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      강원 교행노트 바로가기
+    </a>
+    <p class="muted">
+      ·기관에서 근무중인 주무관님께서 만드셨습니다. 감사, 통계자료, 법제처 자료 등과 다양한 문서편집 툴 기능이 있습니다.
+    </p>
+  </section>
+  
+
 </main>
 
-  <script src="/static/disable-copy.js"></script>
+<script src="/static/disable-copy.js"></script>
   <script src="/static/footer.js"></script>
-  <script src="/static/global-loader.js?v=1"></script>
+<script src="/static/global-loader.js?v=1"></script>
+
 </body>
 </html>
