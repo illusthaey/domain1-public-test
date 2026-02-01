@@ -77,7 +77,7 @@
         <div class="small">
           ·관련: 강원도교육청 인성생활교육과-15279(2025.7.23.), 고용노동부 고시 제2025-34호 및 제2025-36호<br/>
           ·기본값: 필요경비율 14.9%, 산재보험요율(개인) 0.33%, 고용보험요율(개인) 0.8%, 기준보수 하한 1,330,000원 적용.<br/>
-          ※ 월보수액이 80만원 이상~133만원 미만 구간에 해당하면 고용보험료 산정 시 월보수액을 1,330,000원으로 간주함.
+          ※ 월보수액이 80만원 이상~133만원 미만 구간에 해당하면 고용보험료 산정 시 월보수액을 1,330,000원으로 간주함.<br/>
         </div>
       </div>
     </div>
@@ -113,7 +113,7 @@
       <p class="hint">
         ·필요경비율은 기본값(14.9%)으로 고정되어 있으며, **[수기 변경] 체크 시** 입력 가능합니다.<br/>
         ·기준 설정의 필요경비율을 바꾸면, 산출내역의 필요경비율도 **전 행 자동 연동**됩니다.<br/>
-        ·참고: 2024.7월~2025.6월 필요경비율 16.5%임.
+        ·참고: 2024.7월~2025.6월 필요경비율 16.5%임.<br/>
       </p>
     </section>
 
@@ -122,8 +122,8 @@
 
       <p class="small table-note">
         ·월보수액 =(강사료)-(필요경비)<br/>
-        ·고용보험료는 예상값이며, 다른 학교 신고 내역에 따라 변동가능성 있음. 기관부담금 어느정도 나올지 예상하려고 기능 넣음.<br/>
-        ·원단위 절삭.
+        ·고용보험료는 예상값이며, 다른 학교 신고 내역에 따라 변동가능성 있음. 보험료 어느정도 나올지 예상하려고 기능 넣음.<br/>
+        ·원단위 절삭.<br/>
       </p>
 
       <div class="table-wrap">
@@ -137,7 +137,7 @@
               <th class="money">필요경비</th>
               <th class="money">월보수액</th>
               <th class="money">산재보험료(개인)</th>
-              <th class="money">고용보험료(개인, 예상값)</th>
+              <th class="money">고용보험료(예상값)</th>
               <th class="memo">비고</th>
               <th>행</th>
             </tr>
@@ -163,26 +163,27 @@
       <div class="table-actions">
         <div class="toolbar">
           <!-- ✅ 엑셀 입력/업로드 UI 추가 -->
-          <button class="btn ghost" id="btnDownloadTemplate" type="button">엑셀 서식 다운로드</button>
-          <button class="btn ghost" id="btnUploadExcel" type="button">엑셀 업로드</button>
+          <button class="btn ghost" id="btnDownloadTemplate" type="button">일괄 업로드용 서식 다운로드</button>
+          <button class="btn ghost" id="btnUploadExcel" type="button">엑셀 서식 업로드</button>
           <input id="fileUploadExcel" type="file" accept=".xlsx,.xls,.csv" style="display:none" />
 
           <button class="btn ghost" id="btnAddRow" type="button">행 추가하기</button>
           <button class="btn ghost" id="btnReset" type="button">초기화</button>
           <button class="btn primary" id="btnCopy" type="button">표 복사하기</button>
-          <button class="btn ghost" id="btnDownloadCsv" type="button">CSV 다운로드</button>
-          <button class="btn ghost" id="btnDownloadExcel" type="button">결과 엑셀 다운로드</button>
+          <button class="btn ghost" id="btnDownloadExcel" type="button">엑셀(계산결과) 다운로드</button>          
+          <button class="btn ghost" id="btnDownloadCsv" type="button">CSV(계산결과) 다운로드</button>
+
         </div>
       </div>
 
       <p class="hint">
-        ·엑셀 업로드는 **1행=헤더**, **A열=강사명**, **B열=강사료 지급액** 기준으로 읽습니다.<br/>
-        ·(참고) 결과 엑셀(순번/강사명/품의금액…) 파일을 올려도, 헤더를 보고 자동으로 열을 찾아 최대한 읽어옵니다.
+        ·일괄 업로드 요령: 1행은 항목으로 인식하니 2행부터 강사명, 금액 등 내용 입력하십시오.<br/>
+        ·빈 셀 있어도 상관 없음<br/>
       </p>
     </section>
 
     <section class="section dl-section">
-      <h2 class="local-h2">프로그램 다운로드하기</h2>
+      <h2 class="local-h2">exe 프로그램 다운로드 받기</h2>
       <hr/>
 
       <div class="tool-grid">
@@ -193,8 +194,8 @@
 
           <div class="tool-body">
             <div class="tool-list">
-              <div class="tool-line">·웹페이지 기능과 동일한 구성의 프로그램입니다.</div>
-              <div class="tool-line">·입력한 내용대로 엑셀파일 생성함.</div>
+              <div class="tool-line">·웹페이지 기능과 동일한 구성의 프로그램입니다. 입력한 내용대로 엑셀파일 생성함.</div>
+              <div class="tool-line">·PC에 저장해놓고 쓰는 게 더 편하면 다운로드 받아서 사용하십시오.</div>
             </div>
 
             <details class="shot-details">
